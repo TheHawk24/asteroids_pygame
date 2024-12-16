@@ -1,4 +1,5 @@
 import pygame
+import sys
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -11,7 +12,7 @@ def main():
     pygame.init()
 
     if not pygame.get_init():
-        return
+        sys.exit("Failed to intialize pygame")
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     time = pygame.time.Clock()
@@ -38,6 +39,9 @@ def main():
         screen.fill((0, 0, 0))
         for sprite in updatable:
             sprite.update(dt)
+        for sprite in asteroids:
+            if sprite.detect_collision(triangle_player):
+                sys.exit("Game Over!")
         for sprite in drawable:
             sprite.draw(screen)
         pygame.display.flip()
