@@ -45,6 +45,10 @@ def main():
         for sprite in asteroids:
             if sprite.detect_collision(triangle_player):
                 sys.exit("Game Over!")
+            for bullet in shots:
+                if sprite.detect_collision(bullet):
+                    bullet.kill()
+                    sprite.split()
         for sprite in drawable:
             sprite.draw(screen)
         pygame.display.flip()
